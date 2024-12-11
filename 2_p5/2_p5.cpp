@@ -6,26 +6,28 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
     long long B, C, D;
-    cin >> B;
-    cin >> C;
-    cin >> D;
+    cin >> B >> C >> D;
 
-    if (C - D == 0)
+    if (C == D)
     {
-        if (B <= C)
-        {
-            cout << 0 << endl;
-            return 0;
-        }
-
-        cout << B - C << endl;
+        cout << max(0LL, B - C) << endl;
         return 0;
     }
 
     long long ans = 0;
-    for (long long i = D + 1; i <= C - D && i <= B; i++)
-        if (C % i == D)
+    long long e = C - D;
+    for (long long i = 1; i * i <= e && i <= B; i++)
+    {
+        if (e % i != 0)
+            continue;
+
+        if (i > D)
             ans++;
+
+        long long f = e / i;
+        if (f != i && f > D && f <= B)
+            ans++;
+    }
 
     cout << ans << endl;
 
